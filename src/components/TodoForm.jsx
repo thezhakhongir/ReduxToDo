@@ -1,15 +1,22 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
-import { addTask, deleteTask } from "../store/reducers/tasksSlice";
-import "react-toastify/dist/ReactToastify.minimal.css";
+import "react-toastify/dist/ReactToastify.css";
+import { addTask } from "../store/reducers/tasksSlice";
+import { MyBtn } from "./TodoItem";
+
 export const TodoForm = () => {
   const [value, setValue] = useState("");
   const dispatch = useDispatch();
   const onSubmitHandler = (e) => {
+    const newTask = {
+      id: Math.random().toString(),
+      name: value,
+      completed: false,
+    };
     e.preventDefault();
     if (value.trim().length === 0) {
-      toast("Please enter a new task!", {
+      toast.error("Please enter a new task!", {
         position: "top-right",
         autoClose: 2000,
         hideProgressBar: false,
@@ -19,13 +26,10 @@ export const TodoForm = () => {
         progress: undefined,
         theme: "dark",
       });
+    } else {
       setValue("");
-      return;
+      dispatch(addTask(newTask));
     }
-    setValue("");
-
-    dispatch(addTask(value));
-    setValue("");
   };
   return (
     <form onSubmit={onSubmitHandler}>
@@ -35,7 +39,9 @@ export const TodoForm = () => {
         onChange={(e) => setValue(e.target.value)}
         placeholder="Add task"
       />
-      <button type="submit">Add Task</button>
+      <MyBtn type="submit" variant={"outlined"}>
+        Add Task
+      </MyBtn>
       <ToastContainer
         position="top-right"
         autoClose={2000}

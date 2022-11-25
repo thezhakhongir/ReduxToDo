@@ -5,17 +5,20 @@ export const tasksSlice = createSlice({
   initialState: [],
   reducers: {
     addTask: (state, action) => {
-      const newTask = {
-        id: Math.random().toString(),
-        name: action.payload,
-      };
-      state.push(newTask);
+      state.push(action.payload);
     },
     deleteTask: (state, action) => {
-      return state.filter((item) => item.id !== action.payload.id);
+      return state.filter((item) => item.id !== action.payload);
+    },
+    toggleTask: (state, action) => {
+      return state.map((item) =>
+        item.id === action.payload
+          ? { ...item, completed: !item.completed }
+          : item
+      );
     },
   },
 });
 
-export const { addTask, deleteTask } = tasksSlice.actions;
-export default tasksSlice.reducer;
+export const { addTask, deleteTask, toggleTask } = tasksSlice.actions;
+export default tasksSlice;
