@@ -1,7 +1,7 @@
 {
   "name": "example",
   "version": "0.1.0",
-  "homepage": "https://thezhakhongir.github.io/reduxtoolkittodo",
+  "homepage": "https://thezhakhongir.github.io/ReduxToDo",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.5",
